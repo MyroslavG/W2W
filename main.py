@@ -4,6 +4,7 @@ import random
 import time
 import openai
 import os
+from flask import Flask, request
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")    
 get_url = "https://maxrichmusic.com/newsletter-85"
@@ -76,7 +77,8 @@ def create_wordpress_post(post_url, username, password, title, number, content, 
         print("Error:", response.json())
         return False        
 
-if __name__ == '__main__':
+@app.route('/', methods=['POST'])
+def handle_request():
     div_class_to_scrape = 'zoogle-content'
     tag1 = 'div'
 
@@ -91,3 +93,8 @@ if __name__ == '__main__':
     paraphrased_text = paraphrase_text(scraped_text)
 
     create_wordpress_post(post_url, username, password, scraped_title, scraped_newsletter_number, paraphrased_text)
+    
+    return 'Post created successfully!'        
+
+if __name__ == '__main__':
+    app.run()
