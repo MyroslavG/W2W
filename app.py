@@ -82,7 +82,7 @@ def create_wordpress_post(post_url, username, password, title, number, content, 
         print("Error:", response.json())
         return False        
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET'])
 @cross_origin()
 def handle_request():
     div_class_to_scrape = 'zoogle-content'
