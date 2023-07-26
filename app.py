@@ -49,7 +49,7 @@ def paraphrase_text(text_to_paraphrase):
         response = openai.Completion.create(
             engine="text-davinci-003",  # Choose the GPT-3 engine
             prompt=prompt,
-            max_tokens=2000,
+            max_tokens=500,
             temperature=1.0, 
             stop=['\n', '\n\n']
         )
