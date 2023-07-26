@@ -4,6 +4,7 @@ import random
 import time
 import openai
 import os
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
