@@ -82,9 +82,7 @@ def create_wordpress_post(post_url, username, password, title, number, content, 
         print("Error:", response.json())
         return False        
 
-@app.route('/', methods=['GET'])
-@cross_origin()
-def handle_request():
+def handle_request(get_url):
     div_class_to_scrape = 'zoogle-content'
     tag1 = 'div'
 
@@ -101,6 +99,38 @@ def handle_request():
     create_wordpress_post(post_url, username, password, scraped_title, scraped_newsletter_number, paraphrased_text)
     
     return 'Post created successfully!'        
+
+@app.route('/', methods=['GET'])
+@cross_origin() 
+def button_scraping():
+    button_tag = 'a'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+    }
+
+    try:
+        response = requests.get(get_url, headers=headers)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        div_tags = soup.find_all('div', class_='zoogle-feature block layout_full')
+
+        hrefs = []
+
+        for div_tag in div_tags:
+            figure_tags = div_tag.find_all('figure', class_='image custom left')
+            div_hrefs = [a.get('href') for figure_tag in figure_tags for a in figure_tag.find_all('a')]
+            div_hrefs = [href for href in div_hrefs if href is not None]
+            hrefs.extend(div_hrefs)
+        
+        for href in hrefs:
+            handle_request('https://maxrichmusic.com' + href)
+        
+        return 'Posts created successfully!'
+
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch {url}. Error: {e}")
+        return None       
 
 if __name__ == '__main__':
     app.run()
