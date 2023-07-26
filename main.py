@@ -6,7 +6,9 @@ import openai
 import os
 from flask import Flask, request
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")    
+app = Flask(__name__)
+
+openai.api_key = os.getenv(OPENAI_API_KEY)    
 get_url = "https://maxrichmusic.com/newsletter-85"
 post_url = "https://www.kredance.com/wp-json/wp/v2/posts"
 username = "USERNAME"
