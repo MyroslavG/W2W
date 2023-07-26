@@ -4,9 +4,11 @@ import random
 import time
 import openai
 import os
-from flask import Flask, request
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 openai.api_key = os.getenv('OPENAI_API_KEY')    
 get_url = "https://maxrichmusic.com/newsletter-85"
@@ -80,6 +82,7 @@ def create_wordpress_post(post_url, username, password, title, number, content, 
         return False        
 
 @app.route('/', methods=['POST'])
+@cross_origin()
 def handle_request():
     div_class_to_scrape = 'zoogle-content'
     tag1 = 'div'
