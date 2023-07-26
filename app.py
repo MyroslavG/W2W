@@ -8,7 +8,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-openai.api_key = os.getenv(OPENAI_API_KEY)    
+openai.api_key = os.getenv('OPENAI_API_KEY')    
 get_url = "https://maxrichmusic.com/newsletter-85"
 post_url = "https://www.kredance.com/wp-json/wp/v2/posts"
 username = "USERNAME"
