@@ -12,10 +12,10 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 openai.api_key = os.getenv('OPENAI_API_KEY')    
-get_url = "https://maxrichmusic.com/newsletter-85"
-post_url = "https://www.kredance.com/wp-json/wp/v2/posts"
-username = "USERNAME"
-password = "PASSWORD"
+get_url = os.getenv('SCRAPE_URL')
+post_url = os.getenv('POST_URL')
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
 
 def scrape_specific(url, tag, tag_class):    
     headers = {
